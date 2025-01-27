@@ -1,5 +1,5 @@
 # Use an official Node runtime as the base image
-FROM node:18-alpine
+FROM node:18-bullseye
 
 # Set the working directory in the container
 WORKDIR /app
@@ -7,8 +7,8 @@ WORKDIR /app
 # Copy package.json and package-lock.json
 COPY package*.json ./
 
-# Install dependencies
-RUN npm ci
+# Install bcrypt with --build-from-source and other dependencies
+RUN npm install bcrypt --build-from-source && npm ci
 
 # Copy the rest of the application code
 COPY . .
@@ -18,4 +18,3 @@ EXPOSE 5000
 
 # Define the command to run the app
 CMD ["npm", "start"]
-

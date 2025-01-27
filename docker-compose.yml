@@ -2,11 +2,14 @@ version: '3.8'
 
 services:
   frontend:
-    build: ./frontend
+    build: 
+      context: ./frontend
+      args:
+        - NEXT_PUBLIC_API_URL=http://localhost:5000/
     ports:
       - "3000:3000"
     environment:
-      - NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}
+      - NEXT_PUBLIC_API_URL=http://localhost:5000/
     depends_on:
       - backend
 
@@ -15,9 +18,9 @@ services:
     ports:
       - "5000:5000"
     environment:
-      - MONGODB_URI=${MONGODB_URI}
+      - MONGODB_URI=mongodb://mongodb:27017/multipleLLMsApp
       - JWT_SECRET=${JWT_SECRET}
-      - FRONTEND_URL=${FRONTEND_URL}
+      - FRONTEND_URL=${FRONTEND_URL} 
     depends_on:
       - mongodb
 

@@ -35,7 +35,7 @@ export default function Home() {
 
   const fetchApiKeys = async () => {
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/api-keys`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}user/api-keys`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
