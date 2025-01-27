@@ -12,18 +12,15 @@ const app = express()
 const PORT = process.env.PORT || 5000
 
 // Middleware
-app.use(cors(
-)); 
-
+app.use(
+  cors({
+    origin: process.env.FRONTEND_URL,
+    credentials: true,
+  }),
+)
 app.use(express.json())
 
-// Database connection
-mongoose
-  .connect(process.env.MONGODB_URI)
-  .then(() => console.log("Connected to MongoDB"))
-  .catch((err) => console.error("MongoDB connection error:", err))
-
-// Routes
+// Routes - Note: no /api prefix
 app.use("/auth", authRoutes)
 app.use("/user", userRoutes)
 app.use("/chat", chatRoutes)
@@ -39,7 +36,13 @@ app.use((req, res) => {
   res.status(404).json({ message: "Route not found" })
 })
 
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`)
-})
+mongoose
+  .connect(process.env.MONGODB_URI)
+  .then(() => {
+    console.log("Connected to MongoDB")
+    app.listen(PORT, () => {
+      console.log(`Server is running on port ${PORT}`)
+    })
+  })
+  .catch((err) => console.error("MongoDB connection error:", err))
 
