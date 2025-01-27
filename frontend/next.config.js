@@ -8,11 +8,11 @@ const nextConfig = {
     return [
       {
         source: "/:path*",
-        destination: `${process.env.NEXT_PUBLIC_API_URL}:path*`,
+        destination: `${process.env.NEXT_PUBLIC_API_URL.replace(/\/$/, "")}/:path*`,
+        // Remove trailing slash (if any) to prevent double slashes
       },
-    ]
+    ];
   },
-}
+};
 
-module.exports = nextConfig
-
+module.exports = nextConfig;
