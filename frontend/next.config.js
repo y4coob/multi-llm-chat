@@ -4,18 +4,19 @@ const nextConfig = {
     NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL,
   },
   async rewrites() {
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL ? process.env.NEXT_PUBLIC_API_URL.replace(/\/$/, "") : ""
     return [
       {
         source: "/auth/:path*",
-        destination: `${process.env.NEXT_PUBLIC_API_URL}auth/:path*`,
+        destination: `${apiUrl}/auth/:path*`,
       },
       {
         source: "/chat/:path*",
-        destination: `${process.env.NEXT_PUBLIC_API_URL}chat/:path*`,
+        destination: `${apiUrl}/chat/:path*`,
       },
       {
         source: "/user/:path*",
-        destination: `${process.env.NEXT_PUBLIC_API_URL}user/:path*`,
+        destination: `${apiUrl}/user/:path*`,
       },
     ]
   },
