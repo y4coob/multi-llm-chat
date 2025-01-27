@@ -35,7 +35,7 @@ export default function Home() {
 
   const fetchApiKeys = async () => {
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}user/api-keys`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/api-keys`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
@@ -72,7 +72,7 @@ export default function Home() {
             apiKeys={apiKeys}
             onOpenSettings={() => setShowApiKeyDialog(true)}
           />
-          <main className="flex-1 flex flex-col bg-black">
+          <main className="flex-1 flex flex-col overflow-hidden">
             <ChatInterface selectedModels={selectedModels} apiKeys={apiKeys} />
           </main>
         </>
@@ -115,3 +115,4 @@ export default function Home() {
     </div>
   )
 }
+
