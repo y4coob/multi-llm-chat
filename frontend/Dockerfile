@@ -14,6 +14,8 @@ RUN npm ci
 COPY . .
 
 # Create a .env.local file at build time
+ARG NEXT_PUBLIC_API_URL
+ENV NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}
 RUN echo "NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}" > .env.local
 
 # Build the Next.js app

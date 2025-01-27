@@ -7,9 +7,9 @@ services:
       args:
         - NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}
     ports:
-      - "80:3000"
+      - "3000:3000"
     environment:
-      - NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}
+      - NEXT_PUBLIC_API_URL=http://backend:5000/
     depends_on:
       - backend
 
@@ -20,7 +20,7 @@ services:
     environment:
       - MONGODB_URI=mongodb://mongodb:27017/multipleLLMsApp
       - JWT_SECRET=${JWT_SECRET}
-      - FRONTEND_URL=${FRONTEND_URL}
+      - FRONTEND_URL=http://frontend:3000
     depends_on:
       - mongodb
 

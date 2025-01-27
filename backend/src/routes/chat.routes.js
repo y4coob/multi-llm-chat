@@ -4,7 +4,7 @@ const { authMiddleware } = require("../middleware/auth.middleware")
 
 const router = express.Router()
 
-router.post("/", authMiddleware, chatWithModel)
+router.post("/",  chatWithModel)
 
 module.exports = router
 

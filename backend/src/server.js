@@ -1,3 +1,4 @@
+
 const express = require("express")
 const mongoose = require("mongoose")
 const cors = require("cors")
@@ -14,7 +15,11 @@ const PORT = process.env.PORT || 5000
 // Middleware
 app.use(
   cors({
-    origin: process.env.FRONTEND_URL,
+    origin: [
+      "http://localhost:3000",     // For local browser access
+      "http://frontend:3000",      // For container-to-container
+      process.env.FRONTEND_URL     // From environment variable
+    ].filter(Boolean),             // Remove any undefined/null values
     credentials: true,
   }),
 )
