@@ -25,7 +25,6 @@ app.use(
 )
 app.use(express.json())
 
-// Routes - Note: no /api prefix
 app.use("/auth", authRoutes)
 app.use("/user", userRoutes)
 app.use("/chat", chatRoutes)
