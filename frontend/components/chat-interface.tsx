@@ -46,7 +46,7 @@ export function ChatInterface({ selectedModels, apiKeys }: ChatInterfaceProps) {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
   }
 
-  useEffect(scrollToBottom, []) // Updated useEffect dependency
+  useEffect(scrollToBottom, [])
 
   const handleSubmit = async (input: string) => {
     if (!input.trim()) return
@@ -168,32 +168,28 @@ export function ChatInterface({ selectedModels, apiKeys }: ChatInterfaceProps) {
   }
 
   return (
-    <div className="flex flex-col h-full bg-gray-900">
-      <Tabs defaultValue={selectedModels[0]} className="flex-1 flex flex-col">
-        <TabsList className="bg-gray-800 border-b border-gray-700">
-          {selectedModels.map((model) => (
-            <TabsTrigger
-              key={model}
-              value={model}
-              className="text-gray-300 data-[state=active]:text-white data-[state=active]:bg-gray-700"
-            >
+    <div className="flex flex-col h-full bg-black">
+      <Tabs defaultValue={selectedModels?.[0]} className="flex-1">
+        <TabsList className="bg-white/5 border-b border-white/10">
+          {selectedModels?.map((model) => (
+            <TabsTrigger key={model} value={model} className="text-white/70 data-[state=active]:text-white">
               {model}
             </TabsTrigger>
-          ))}
+          )) ?? null}
         </TabsList>
         {chatThreads.map((thread) => (
-          <TabsContent key={thread.model} value={thread.model} className="flex-1 flex flex-col overflow-hidden p-4">
-            <ScrollArea className="flex-1">
-              <div className="max-w-2xl mx-auto space-y-4">
+          <TabsContent key={thread.model} value={thread.model} className="flex-1 overflow-auto">
+            <ScrollArea className="h-full px-4">
+              <div className="max-w-2xl mx-auto py-4 space-y-4">
                 {thread.messages.map((message, index) => (
                   <div key={index} className={`flex ${message.role === "user" ? "justify-end" : "justify-start"}`}>
                     <div
                       className={`p-3 rounded-lg ${
                         message.role === "error"
-                          ? "bg-red-900/50 w-full"
+                          ? "bg-red-950/50 w-full"
                           : message.role === "user"
-                            ? "bg-blue-600 ml-auto"
-                            : "bg-gray-700"
+                            ? "bg-white/10 ml-auto"
+                            : "bg-white/20"
                       } ${message.role !== "error" ? "max-w-[75%] break-words" : ""}`}
                     >
                       {message.role === "error" ? (
@@ -214,7 +210,7 @@ export function ChatInterface({ selectedModels, apiKeys }: ChatInterfaceProps) {
           </TabsContent>
         ))}
       </Tabs>
-      <div className="border-t border-gray-700 p-4">
+      <div className="border-t border-white/5 p-4">
         <AIInputWithLoading
           onSubmit={handleSubmit}
           loadingDuration={3000}

@@ -35,7 +35,7 @@ export default function Home() {
 
   const fetchApiKeys = async () => {
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/api-keys`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}user/api-keys`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
@@ -61,7 +61,7 @@ export default function Home() {
   }
 
   return (
-    <div className="flex h-screen bg-gray-900 text-white">
+    <div className="flex h-screen bg-black text-white">
       {isAuthenticated || (!isAuthenticated && Object.values(apiKeys).some((key) => key !== "")) ? (
         <>
           <Sidebar
@@ -72,12 +72,12 @@ export default function Home() {
             apiKeys={apiKeys}
             onOpenSettings={() => setShowApiKeyDialog(true)}
           />
-          <main className="flex-1 flex flex-col overflow-hidden">
+          <main className="flex-1 flex flex-col bg-black">
             <ChatInterface selectedModels={selectedModels} apiKeys={apiKeys} />
           </main>
         </>
       ) : (
-        <div className="flex flex-col items-center justify-center h-full w-full">
+        <div className="flex flex-col items-center justify-center h-full w-full bg-black">
           <div className="w-full max-w-sm space-y-8 px-4">
             <div className="text-center">
               <h1 className="text-4xl font-bold mb-8">Welcome to Multi-LLM Chat</h1>
@@ -85,19 +85,19 @@ export default function Home() {
             <div className="space-y-4">
               <button
                 onClick={() => router.push("/login")}
-                className="w-full h-12 bg-gray-800 hover:bg-gray-700 text-white border-0 rounded-xl text-lg font-medium transition-colors"
+                className="w-full h-12 bg-white/5 hover:bg-white/10 text-white border-0 rounded-xl text-lg font-medium transition-colors"
               >
                 Login
               </button>
               <button
                 onClick={() => router.push("/register")}
-                className="w-full h-12 bg-gray-800 hover:bg-gray-700 text-white border-0 rounded-xl text-lg font-medium transition-colors"
+                className="w-full h-12 bg-white/5 hover:bg-white/10 text-white border-0 rounded-xl text-lg font-medium transition-colors"
               >
                 Register
               </button>
               <button
                 onClick={() => setShowApiKeyDialog(true)}
-                className="w-full h-12 text-gray-300 hover:text-white hover:bg-gray-800 rounded-xl text-lg font-medium transition-colors"
+                className="w-full h-12 text-white/70 hover:text-white hover:bg-white/5 rounded-xl text-lg font-medium transition-colors"
               >
                 Continue as Guest
               </button>
@@ -115,4 +115,3 @@ export default function Home() {
     </div>
   )
 }
-
