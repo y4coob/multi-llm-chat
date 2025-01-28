@@ -4,7 +4,10 @@ const { Anthropic } = require("@anthropic-ai/sdk")
 exports.chatWithModel = async (req, res) => {
   const { model, message, apiKey } = req.body
 
+  console.log('Received request for model:', model);
+  
   if (!apiKey) {
+    console.log('Missing API key');
     return res.status(400).json({
       error: "API key is required",
       code: "missing_api_key",
@@ -43,20 +46,29 @@ exports.chatWithModel = async (req, res) => {
     } else if (model.startsWith("deepseek")) {
       try {
         const deepseek = new OpenAI({
-          baseURL: "https://api.deepseek.com",
+          baseURL: "https://api.deepseek.com/v1",
           apiKey: apiKey,
         })
 
+        console.log("Sending request to DeepSeek API...");
         const completion = await deepseek.chat.completions.create({
           model: "deepseek-chat",
           messages: [
             { role: "system", content: "You are a helpful assistant." },
             { role: "user", content: message },
           ],
+          max_tokens: 1000,
         })
 
+        console.log("DeepSeek API response received:", completion);
         response = completion.choices[0].message.content
       } catch (error) {
+        console.error("DeepSeek API Error:", {
+          status: error.status,
+          message: error.message,
+          response: error.response?.data,
+        });
+
         if (error.status === 401) {
           return res.status(401).json({
             error: "Invalid DeepSeek API key",
@@ -67,6 +79,13 @@ exports.chatWithModel = async (req, res) => {
           return res.status(429).json({
             error: "DeepSeek API rate limit exceeded",
             code: "rate_limit",
+          })
+        }
+        if (error.type === 'invalid-json') {
+          return res.status(502).json({
+            error: "Invalid response from DeepSeek API",
+            code: "api_error",
+            details: "The API returned an invalid response"
           })
         }
         throw error
@@ -80,7 +99,13 @@ exports.chatWithModel = async (req, res) => {
 
     res.json({ response })
   } catch (error) {
-    console.error("Error in chat controller:", error)
+    console.error("Error in chat controller:", {
+      message: error.message,
+      stack: error.stack,
+      status: error.status,
+      type: error.type,
+      response: error.response?.data
+    });
 
     if (error.status === 401) {
       return res.status(401).json({
