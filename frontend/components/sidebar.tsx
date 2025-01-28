@@ -36,7 +36,7 @@ export function Sidebar({
   }
 
   return (
-    <div className="w-64 bg-black p-4 flex flex-col">
+    <div className="w-64 bg-gray-800 p-4 flex flex-col h-full">
       <h1 className="text-2xl font-bold mb-6 text-white">Multi-LLM Chat</h1>
       <ScrollArea className="flex-1">
         <div className="space-y-4">
@@ -54,11 +54,11 @@ export function Sidebar({
                 <div className="space-y-1">
                   <Label
                     htmlFor={model.id}
-                    className={`text-sm font-medium ${hasApiKey ? "text-white" : "text-white/50"}`}
+                    className={`text-sm font-medium ${hasApiKey ? "text-white" : "text-gray-400"}`}
                   >
                     {model.name}
                   </Label>
-                  {!hasApiKey && <p className="text-xs text-white/50">API key required</p>}
+                  {!hasApiKey && <p className="text-xs text-gray-500">API key required</p>}
                 </div>
               </div>
             )
@@ -69,7 +69,7 @@ export function Sidebar({
         <Button
           onClick={onOpenSettings}
           variant="ghost"
-          className="w-full bg-white/5 text-white hover:bg-white/10 transition-colors duration-200"
+          className="w-full bg-gray-700 text-white hover:bg-gray-600 transition-colors duration-200"
         >
           <Settings className="mr-2 h-4 w-4" />
           Settings
@@ -78,7 +78,7 @@ export function Sidebar({
           <Button
             onClick={onLogout}
             variant="ghost"
-            className="w-full bg-white/5 text-white hover:bg-white/10 transition-colors duration-200"
+            className="w-full bg-gray-700 text-white hover:bg-gray-600 transition-colors duration-200"
           >
             Logout
           </Button>
